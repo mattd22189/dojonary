@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>bouncing</title>
+  </head>
+<body>
+
+    <div style="max-width:4000px; width:max-content; max-height: 4000; height: max-content; ">
+    <canvas id="block" style=" position: absolute; background-color:blue; width:300px; height:200px; border-color:black;  "></canvas>
+    </div>
+
+
+
+    <script src="bouncing.js">
+        
+        let canvas = document.getElementById("block");
+        let c = canvas.getContext("2d");
+        let tx = window.innerWidth;
+        let ty = window.innerHeight
+
+        let mouseX = 0;
+        let mouseY = 0;
+        addEventListener("mousemove", function(){
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        });
+
+         let gravity = .75;
+         c.strokeWidth=7;
+
+         function Ball() {
+  
+  this.radius = Math.random() * 20 + 14;
+  this.startradius = this.radius;
+  this.x = Math.random() * (tx - this.radius * 2) + this.radius;
+  this.y = Math.random() * (ty - this.radius);
+  this.dy = Math.random() * 2;
+  this.dx = Math.round((Math.random() - 0.5) * 10);
+  this.vel = Math.random() /5;
+  this.update = function() {
+    c.beginPath();
+    c.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    //c.stroke();
+  };
+}
+
+var bal = [];
+for (var i=0; i<50; i++){
+    bal.push(new Ball());
+}
+
+function animate() {    
+  if (tx != window.innerWidth || ty != window.innerHeight) {
+    tx = window.innerWidth;
+    ty = window.innerHeight;
+    canvas.width = tx;
+    canvas.height = ty;
+  }
+  requestAnimationFrame(animate);
+  c.clearRect(0, 0, tx, ty);
+  for (var i = 0; i < bal.length; i++) {
+    bal[i].update();
+    bal[i].y += bal[i].dy;
+    bal[i].x += bal[i].dx;
+    if (bal[i].y + bal[i].radius >= ty) {
+      bal[i].dy = -bal[i].dy * grav;
+    } else {
+      bal[i].dy += bal[i].vel;
+    }    
+    if(bal[i].x + bal[i].radius > tx || bal[i].x - bal[i].radius < 0){
+        bal[i].dx = -bal[i].dx;
+    }
+    if(mousex > bal[i].x - 20 && 
+      mousex < bal[i].x + 20 &&
+      mousey > bal[i].y -50 &&
+      mousey < bal[i].y +50 &&
+      bal[i].radius < 70){
+        //bal[i].x += +1;
+        bal[i].radius +=5; 
+      } else {
+        if(bal[i].radius > bal[i].startradius){
+          bal[i].radius += -5;
+        }
+      }
+      
+    //forloop end
+    }
+//animation end
+}
+
+animate();
+
+setInterval(function() {
+  bal.push(new Ball());
+  bal.splice(0, 1);
+}, 400);
+
+/*
+        document.querySelector('canvas').getAttributes("")
+
+        //bounces off the walls
+          //Move object position y , x axis.
+            
+        //gets change speeds when it hits something
+        //react to mouse
+        
+        
+        if (increase = 0%){
+            increment = increment++ 
+        }else if (increase = 100%){
+            increment = increment-- 
+        }
+        
+        y = increase
+        x = increase
+        
+
+
+        move = document.getElementById("block").style.position = //position(x,y);
+        
+        // for loop
+        //conditionals
+        //functions
+        //array - of the colors or changable objects
+        //animate logo
+        //where to start 
+        //where to move 
+        //what color to start 
+        //what color to change
+
+        //step #1
+
+       // move = document.getElementById("block").style.position
+       // for (let move < ; move = position2; x++){ 
+
+
+       // }
+
+        //function movement(xAxis,yAxis){
+        
+       // }
+
+      //  movement()
+
+
+
+
+        let x = 0, y = 0, dirX =1, dirY=1 
+        
+        const speed= 2 
+        let logo_style = ["logo1", "logo2" "logo3"]
+        
+        */
+        
+    </script>
+</body>
+</html>
